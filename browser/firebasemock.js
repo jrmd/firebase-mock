@@ -1,4 +1,4 @@
-/** firebase-mock - v2.2.11
+/** firebase-mock-fork - v2.2.11
 https://github.com/soumak77/firebase-mock
 * Copyright (c) 2016 Brian Soumakian
 * License: MIT */
@@ -49588,7 +49588,7 @@ function extractName(path) {
 
 module.exports = MockAuthentication;
 
-},{"./firebase-auth":74,"./lodash":84,"./query":86,"./queue":87,"./snapshot":90,"./utils":96,"./validators":97,"assert":1,"firebase-auto-ids":8,"rsvp":66}],74:[function(require,module,exports){
+},{"./firebase-auth":74,"./lodash":85,"./query":87,"./queue":88,"./snapshot":91,"./utils":97,"./validators":98,"assert":1,"firebase-auto-ids":8,"rsvp":66}],74:[function(require,module,exports){
 'use strict';
 
 var _      = require('./lodash');
@@ -50170,7 +50170,7 @@ function validateArgument (method, object, position, name, type) {
 
 module.exports = FirebaseAuth;
 
-},{"./lodash":84,"./user":95,"rsvp":66,"util":72}],75:[function(require,module,exports){
+},{"./lodash":85,"./user":96,"rsvp":66,"util":72}],75:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -50901,7 +50901,7 @@ function render(datum) {
 
 module.exports = MockFirebase;
 
-},{"./firebase-auth":74,"./lodash":84,"./query":86,"./queue":87,"./snapshot":90,"./utils":96,"./validators":97,"assert":1,"firebase-auto-ids":8,"rsvp":66}],76:[function(require,module,exports){
+},{"./firebase-auth":74,"./lodash":85,"./query":87,"./queue":88,"./snapshot":91,"./utils":97,"./validators":98,"assert":1,"firebase-auto-ids":8,"rsvp":66}],76:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -50983,7 +50983,7 @@ function extractName(path) {
 
 module.exports = MockFirestoreCollection;
 
-},{"./firestore-query":82,"./lodash":84,"./queue":87,"./utils":96,"./validators":97,"assert":1,"firebase-auto-ids":8,"rsvp":66}],77:[function(require,module,exports){
+},{"./firestore-query":82,"./lodash":85,"./queue":88,"./utils":97,"./validators":98,"assert":1,"firebase-auto-ids":8,"rsvp":66}],77:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -51015,7 +51015,7 @@ function applyDelta(data, delta) {
 
 module.exports = MockFirestoreDeltaDocumentSnapshot;
 
-},{"./firestore-document-snapshot":78,"./lodash":84}],78:[function(require,module,exports){
+},{"./firestore-document-snapshot":78,"./lodash":85}],78:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -51051,7 +51051,7 @@ MockFirestoreDocumentSnapshot.prototype.get = function (path) {
 
 module.exports = MockFirestoreDocumentSnapshot;
 
-},{"./lodash":84}],79:[function(require,module,exports){
+},{"./lodash":85}],79:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -51328,7 +51328,7 @@ function extractName(path) {
 
 module.exports = MockFirestoreDocument;
 
-},{"./firestore-document-snapshot":78,"./lodash":84,"./queue":87,"./utils":96,"./validators":97,"assert":1,"firebase-auto-ids":8,"rsvp":66}],80:[function(require,module,exports){
+},{"./firestore-document-snapshot":78,"./lodash":85,"./queue":88,"./utils":97,"./validators":98,"assert":1,"firebase-auto-ids":8,"rsvp":66}],80:[function(require,module,exports){
 'use strict';
 
 function MockFirestoreFieldValue(type) {
@@ -51382,7 +51382,7 @@ MockFirestoreQuerySnapshot.prototype.forEach = function (callback, context) {
 
 module.exports = MockFirestoreQuerySnapshot;
 
-},{"./firestore-document-snapshot":78,"./lodash":84}],82:[function(require,module,exports){
+},{"./firestore-document-snapshot":78,"./lodash":85}],82:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -51509,10 +51509,12 @@ MockFirestoreQuery.prototype.stream = function () {
 
 MockFirestoreQuery.prototype.where = function (property, operator, value) {
   var query;
-  console.log(property, operator, value);
-  if (_.size(this.data) !== 0) {
+
+  if (_.size(this.data) === 0) {
     return new MockFirestoreQuery(this.path, null, this.parent, this.id);
   }
+
+  var results = {};
 
   switch (operator) {
     case '==':
@@ -51525,7 +51527,6 @@ MockFirestoreQuery.prototype.where = function (property, operator, value) {
 
     case '!=':
       _.forEach(this.data, function(data, key) {
-        console.log(_.get(data, property), value, _.get(data, property) != value);
         if (!_.isEqual(_.get(data, property), value)) {
           results[key] = _.cloneDeep(data);
         }
@@ -51534,7 +51535,6 @@ MockFirestoreQuery.prototype.where = function (property, operator, value) {
 
     case '>':
       _.forEach(this.data, function(data, key) {
-        console.log(_.get(data, property), value, _.get(data, property) > value);
         if (_.get(data, property) > value) {
           results[key] = _.cloneDeep(data);
         }
@@ -51542,7 +51542,6 @@ MockFirestoreQuery.prototype.where = function (property, operator, value) {
       break;
     case '>=':
       _.forEach(this.data, function(data, key) {
-        console.log(_.get(data, property), value, _.get(data, property) >= value);
         if (_.get(data, property) >= value) {
           results[key] = _.cloneDeep(data);
         }
@@ -51551,7 +51550,6 @@ MockFirestoreQuery.prototype.where = function (property, operator, value) {
 
     case '<':
       _.forEach(this.data, function(data, key) {
-        console.log(_.get(data, property), value, _.get(data, property) < value);
         if (_.get(data, property) < value) {
           results[key] = _.cloneDeep(data);
         }
@@ -51560,7 +51558,6 @@ MockFirestoreQuery.prototype.where = function (property, operator, value) {
 
     case '<=':
       _.forEach(this.data, function(data, key) {
-        console.log(_.get(data, property), value, _.get(data, property) <= value);
         if (_.get(data, property) <= value) {
           results[key] = _.cloneDeep(data);
         }
@@ -51568,25 +51565,11 @@ MockFirestoreQuery.prototype.where = function (property, operator, value) {
       break;
 
     default:
+      console.warn('unsupported operator');
       return new MockFirestoreQuery(this.path, null, this.parent, this.id);
-      break;
   }
 
   return new MockFirestoreQuery(this.path, results, this.parent, this.id);
-
-
-  // check if unsupported operator
-  if (operator !== '==') {
-    console.warn('Using unsupported where() operator for firebase-mock, returning entire dataset');
-    return this;
-  } else {
-    if (_.size(this.data) !== 0) {
-      var results = {};
-
-    } else {
-
-    }
-  }
 };
 
 MockFirestoreQuery.prototype.orderBy = function (property, direction) {
@@ -51629,7 +51612,7 @@ function extractName(path) {
 
 module.exports = MockFirestoreQuery;
 
-},{"./firestore-query-snapshot":81,"./lodash":84,"./queue":87,"./utils":96,"./validators":97,"assert":1,"firebase-auto-ids":8,"rsvp":66,"stream":68}],83:[function(require,module,exports){
+},{"./firestore-query-snapshot":81,"./lodash":85,"./queue":88,"./utils":97,"./validators":98,"assert":1,"firebase-auto-ids":8,"rsvp":66,"stream":68}],83:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -51854,7 +51837,57 @@ function extractName(path) {
 
 module.exports = MockFirestore;
 
-},{"./firestore-collection":76,"./firestore-document":79,"./firestore-field-value":80,"./lodash":84,"./queue":87,"./utils":96,"./validators":97,"assert":1,"rsvp":66}],84:[function(require,module,exports){
+},{"./firestore-collection":76,"./firestore-document":79,"./firestore-field-value":80,"./lodash":85,"./queue":88,"./utils":97,"./validators":98,"assert":1,"rsvp":66}],84:[function(require,module,exports){
+function MockFirebaseFunctions() {
+	this.functionsCalled = {};
+	this.functionsCalledWith = {};
+	this.functionToRespond = {};
+
+	return this;
+}
+
+MockFirebaseFunctions.prototype.calledTimes = function(key) {
+	return this.functionsCalled[key] || 0;
+};
+
+MockFirebaseFunctions.prototype.calledWith = function(key) {
+	return this.functionsCalledWith[key] || undefined;
+};
+
+MockFirebaseFunctions.prototype.setResponse = function (key, response) {
+	this.functionToRespond[key] = response;
+	return this;
+}
+
+MockFirebaseFunctions.prototype.registerFunction = function (key, response) {
+	this.functionsCalled[key] = 0;
+
+	if (response) {
+		this.functionToRespond[key] = response;
+	}
+
+	return this;
+}
+
+MockFirebaseFunctions.prototype.httpsCallable = function (key) {
+	const response = this.functionToRespond[key] || undefined;
+	return (...args) => new Promise((resolve) => {
+		console.warn('hello! we been called');
+		this.functionsCalled[key] += 1;
+		this.functionsCalledWith[key] = args;
+		resolve(response);
+	});
+}
+
+MockFirebaseFunctions.prototype.reset = function () {
+	this.functionsCalled = Object.keys(this.functionsCalled).reduce((carry, key) => ({
+		...carry,
+		[key]: 0,
+	}), {});
+}
+
+module.exports = MockFirebaseFunctions;
+},{}],85:[function(require,module,exports){
 module.exports = {
   assign: require('lodash.assign'),
   bind: require('lodash.bind'),
@@ -51893,7 +51926,7 @@ module.exports = {
   toArray: require('lodash.toarray')
 };
 
-},{"lodash.assign":13,"lodash.assignin":14,"lodash.bind":15,"lodash.clone":16,"lodash.clonedeep":17,"lodash.clonedeepwith":18,"lodash.compact":19,"lodash.difference":20,"lodash.every":21,"lodash.filter":22,"lodash.find":23,"lodash.findindex":24,"lodash.foreach":25,"lodash.forin":26,"lodash.get":27,"lodash.has":28,"lodash.includes":29,"lodash.indexof":30,"lodash.isempty":31,"lodash.isequal":32,"lodash.isfunction":33,"lodash.isnumber":34,"lodash.isobject":35,"lodash.isstring":36,"lodash.isundefined":37,"lodash.keys":38,"lodash.map":39,"lodash.merge":40,"lodash.noop":41,"lodash.orderby":42,"lodash.reduce":43,"lodash.remove":44,"lodash.set":45,"lodash.size":46,"lodash.toarray":47}],85:[function(require,module,exports){
+},{"lodash.assign":13,"lodash.assignin":14,"lodash.bind":15,"lodash.clone":16,"lodash.clonedeep":17,"lodash.clonedeepwith":18,"lodash.compact":19,"lodash.difference":20,"lodash.every":21,"lodash.filter":22,"lodash.find":23,"lodash.findindex":24,"lodash.foreach":25,"lodash.forin":26,"lodash.get":27,"lodash.has":28,"lodash.includes":29,"lodash.indexof":30,"lodash.isempty":31,"lodash.isequal":32,"lodash.isfunction":33,"lodash.isnumber":34,"lodash.isobject":35,"lodash.isstring":36,"lodash.isundefined":37,"lodash.keys":38,"lodash.map":39,"lodash.merge":40,"lodash.noop":41,"lodash.orderby":42,"lodash.reduce":43,"lodash.remove":44,"lodash.set":45,"lodash.size":46,"lodash.toarray":47}],86:[function(require,module,exports){
 'use strict';
 
 function MockMessaging() {
@@ -51901,7 +51934,7 @@ function MockMessaging() {
 
 module.exports = MockMessaging;
 
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -52088,7 +52121,7 @@ function assertQuery (method, pri, key) {
 
 module.exports = MockQuery;
 
-},{"./lodash":84,"./slice":89,"./utils":96,"./validators":97,"rsvp":66}],87:[function(require,module,exports){
+},{"./lodash":85,"./slice":90,"./utils":97,"./validators":98,"rsvp":66}],88:[function(require,module,exports){
 'use strict';
 
 var _            = require('./lodash');
@@ -52164,13 +52197,14 @@ FlushEvent.prototype.cancel = function () {
 exports.Queue = FlushQueue;
 exports.Event = FlushEvent;
 
-},{"./lodash":84,"events":6,"util":72}],88:[function(require,module,exports){
+},{"./lodash":85,"events":6,"util":72}],89:[function(require,module,exports){
 var MockAuthentication = require('./auth');
 var MockFirebase = require('./firebase');
 var MockFirestore = require('./firestore');
 var MockFieldValue = require('./firestore-field-value');
 var MockMessaging = require('./messaging');
 var MockStorage = require('./storage');
+var MockFunctions = require('./functions');
 
 var EmailAuthProvider = function() {
   this.providerId = EmailAuthProvider.PROVIDER_ID;
@@ -52253,19 +52287,27 @@ function MockFirebaseSdk(createDatabase, createAuth, createFirestore, createStor
     return createMessaging ? createMessaging() : new MockMessaging();
   }
 
+  const mockFunctions = new MockFunctions();
+  const MockFirebaseFunctions = function() {
+    return mockFunctions;
+  }
+
   return {
     database: MockFirebaseDatabase,
     auth: MockFirebaseAuth,
     firestore: MockFirebaseFirestore,
     storage: MockFirebaseStorage,
     messaging: MockFirebaseMessaging,
+    functions: MockFirebaseFunctions,
+
     initializeApp: function() {
       return {
         database: MockFirebaseDatabase,
         auth: MockFirebaseAuth,
         firestore: MockFirebaseFirestore,
         storage: MockFirebaseStorage,
-        messaging: MockFirebaseMessaging
+        messaging: MockFirebaseMessaging,
+        functions: MockFirebaseFunctions,
       };
     }
   };
@@ -52273,7 +52315,7 @@ function MockFirebaseSdk(createDatabase, createAuth, createFirestore, createStor
 
 module.exports = MockFirebaseSdk;
 
-},{"./auth":73,"./firebase":75,"./firestore":83,"./firestore-field-value":80,"./messaging":85,"./storage":94}],89:[function(require,module,exports){
+},{"./auth":73,"./firebase":75,"./firestore":83,"./firestore-field-value":80,"./functions":84,"./messaging":86,"./storage":95}],90:[function(require,module,exports){
 'use strict';
 
 var _        = require('./lodash');
@@ -52477,7 +52519,7 @@ Slice.prototype._build = function(ref, rawData) {
 
 module.exports = Slice;
 
-},{"./lodash":84,"./snapshot":90,"./utils":96}],90:[function(require,module,exports){
+},{"./lodash":85,"./snapshot":91,"./utils":97}],91:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -52568,7 +52610,7 @@ function isValue (value) {
 
 module.exports = MockDataSnapshot;
 
-},{"./lodash":84}],91:[function(require,module,exports){
+},{"./lodash":85}],92:[function(require,module,exports){
 /*
   Mock for @google-cloud/storage Bucket
   https://cloud.google.com/nodejs/docs/reference/storage/1.6.x/Bucket
@@ -52629,7 +52671,7 @@ MockStorageBucket.prototype.moveFile = function (oldPath, newPath) {
 
 module.exports = MockStorageBucket;
 
-},{"./storage-file":92,"rsvp":66}],92:[function(require,module,exports){
+},{"./storage-file":93,"rsvp":66}],93:[function(require,module,exports){
 /*
   Mock for @google-cloud/storage File
   https://cloud.google.com/nodejs/docs/reference/storage/1.6.x/File
@@ -52721,7 +52763,7 @@ MockStorageFile.prototype.getMetadata = function() {
 
 module.exports = MockStorageFile;
 
-},{"./lodash":84,"fs":4,"rsvp":66}],93:[function(require,module,exports){
+},{"./lodash":85,"fs":4,"rsvp":66}],94:[function(require,module,exports){
 /*
   Mock for firebase.storage.Reference
   https://firebase.google.com/docs/reference/js/firebase.storage.Reference
@@ -52794,7 +52836,7 @@ MockStorageReference.prototype.putString = function(data) {
 
 module.exports = MockStorageReference;
 
-},{"rsvp":66}],94:[function(require,module,exports){
+},{"rsvp":66}],95:[function(require,module,exports){
 /*
   Mock for firebase.storage.Storage and admin.storage.Storage
   https://firebase.google.com/docs/reference/js/firebase.storage.Storage
@@ -52843,7 +52885,7 @@ MockStorage.prototype.bucket = function(name) {
 
 module.exports = MockStorage;
 
-},{"./storage-bucket":91,"./storage-reference":93,"rsvp":66}],95:[function(require,module,exports){
+},{"./storage-bucket":92,"./storage-reference":94,"rsvp":66}],96:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash');
@@ -52959,7 +53001,7 @@ MockFirebaseUser.prototype.getIdToken = function (forceRefresh) {
 
 module.exports = MockFirebaseUser;
 
-},{"./lodash":84,"rsvp":66}],96:[function(require,module,exports){
+},{"./lodash":85,"rsvp":66}],97:[function(require,module,exports){
 'use strict';
 
 var Snapshot = require('./snapshot');
@@ -53169,7 +53211,7 @@ exports.createThenableReference = function(reference, promise) {
   return reference;
 };
 
-},{"./firestore-field-value":80,"./lodash":84,"./snapshot":90}],97:[function(require,module,exports){
+},{"./firestore-field-value":80,"./lodash":85,"./snapshot":91}],98:[function(require,module,exports){
 'use strict';
 
 var assert = require('assert');
@@ -53188,7 +53230,7 @@ exports.data = function(obj){
   var undefinedProperties = findUndefinedProperties(obj);
   assert(undefinedProperties.length === 0, 'Data contains undefined properties at ' + undefinedProperties);
 };
-},{"./utils":96,"assert":1,"util":72}],98:[function(require,module,exports){
+},{"./utils":97,"assert":1,"util":72}],99:[function(require,module,exports){
 'use strict';
 
 var MockFirestoreDeltaDocumentSnapshot = require('./firestore-delta-document-snapshot');
@@ -53201,7 +53243,7 @@ exports.MockStorage = require('./storage');
 exports.MockMessaging = require('./messaging');
 exports.DeltaDocumentSnapshot = MockFirestoreDeltaDocumentSnapshot.create;
 
-},{"./auth":73,"./firebase":75,"./firestore":83,"./firestore-delta-document-snapshot":77,"./messaging":85,"./sdk":88,"./storage":94}]},{},[98])(98)
+},{"./auth":73,"./firebase":75,"./firestore":83,"./firestore-delta-document-snapshot":77,"./messaging":86,"./sdk":89,"./storage":95}]},{},[99])(99)
 });
 ;(function (window) {
   'use strict';
