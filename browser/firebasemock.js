@@ -1,4 +1,4 @@
-/** firebase-mock-fork - v2.2.11
+/** firebase-mock-fork - v2.2.12
 https://github.com/soumak77/firebase-mock
 * Copyright (c) 2016 Brian Soumakian
 * License: MIT */
@@ -52853,7 +52853,7 @@ function MockStorage() {
   this.refs = {};
 }
 
-MockStorage.prototype.ref = function(path) {
+MockStorage.prototype.ref = function(path = '') {
   // replace multiple consecutive slashs with single slash
   path = path.replace(/\/+/g,'/');
 

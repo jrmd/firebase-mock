@@ -14,7 +14,7 @@ function MockStorage() {
   this.refs = {};
 }
 
-MockStorage.prototype.ref = function(path) {
+MockStorage.prototype.ref = function(path = '') {
   // replace multiple consecutive slashs with single slash
   path = path.replace(/\/+/g,'/');
 
