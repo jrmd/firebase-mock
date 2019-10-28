@@ -1,4 +1,4 @@
-/** firebase-mock-fork - v2.2.14
+/** firebase-mock-fork - v2.2.15
 https://github.com/soumak77/firebase-mock
 * Copyright (c) 2016 Brian Soumakian
 * License: MIT */
@@ -51260,6 +51260,10 @@ MockFirestoreDocument.prototype.delete = function (callback) {
     });
   });
 };
+
+MockFirestoreDocument.prototype.onSnapshot = function () {
+  // empty function to prevent error
+}
 
 /**
  * Fetches the subcollections that are direct children of the document.

@@ -203,6 +203,10 @@ MockFirestoreDocument.prototype.delete = function (callback) {
   });
 };
 
+MockFirestoreDocument.prototype.onSnapshot = function () {
+  // empty function to prevent error
+}
+
 /**
  * Fetches the subcollections that are direct children of the document.
  * @see https://cloud.google.com/nodejs/docs/reference/firestore/0.15.x/DocumentReference#getCollections

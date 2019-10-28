@@ -1,6 +1,6 @@
 {
   "name": "firebase-mock-fork",
-  "version": "2.2.13",
+  "version": "2.2.14",
   "description": "Firebase mock library for writing unit tests, forked from firebase-mock",
   "main": "./src",
   "scripts": {
