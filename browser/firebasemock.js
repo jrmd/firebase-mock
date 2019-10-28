@@ -1,4 +1,4 @@
-/** firebase-mock-fork - v2.2.12
+/** firebase-mock-fork - v2.2.13
 https://github.com/soumak77/firebase-mock
 * Copyright (c) 2016 Brian Soumakian
 * License: MIT */
@@ -50968,6 +50968,10 @@ MockFirestoreCollection.prototype.doc = function (path) {
   }
   return child;
 };
+
+MockFirestoreCollection.prototype.onSnapshot = function () {
+  // empty function to prevent error
+}
 
 MockFirestoreCollection.prototype._hasChild = function (key) {
   return _.isObject(this.data) && _.has(this.data, key);

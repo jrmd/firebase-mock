@@ -65,6 +65,10 @@ MockFirestoreCollection.prototype.doc = function (path) {
   return child;
 };
 
+MockFirestoreCollection.prototype.onSnapshot = function () {
+  // empty function to prevent error
+}
+
 MockFirestoreCollection.prototype._hasChild = function (key) {
   return _.isObject(this.data) && _.has(this.data, key);
 };
