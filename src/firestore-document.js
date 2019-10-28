@@ -73,6 +73,10 @@ MockFirestoreDocument.prototype.collection = function (path) {
   return child;
 };
 
+MockFirestoreDocument.prototype.DocumentReference = function() {
+  // Empty to prevent Errors.
+};
+
 MockFirestoreDocument.prototype.get = function () {
   var err = this._nextErr('get');
   var self = this;
